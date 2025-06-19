@@ -1,0 +1,40 @@
+#!/usr/bin/python3
+
+from PIL import Image
+from PIL.ExifTags import TAGS
+import os
+
+directory = "/home/trev/Pictures/From_Google/"
+examplefile = ""
+
+
+for entry in os.scandir(directory):
+    if (entry.path.endswith(".jpg") and entry.is_file()):
+        print(entry.path) 
+        image = Image.open(entry.path)
+        exifdata = image.getexif()
+
+
+
+
+
+
+
+
+        try:
+            for tag_id in exifdata:
+    	# get the tag name, instead of human unreadable tag id
+                tag = TAGS.get(tag_id, tag_id)
+                data = exifdata.get(tag_id)
+    # decode bytes
+                if isinstance(data, bytes):
+                    data = data.decode()
+                if "DateTimeOriginal" in f"{tag:25}":
+                    print(f"{data}"[0:4])
+
+                #print(f"{tag:25}: {data}")
+    #bob = f"{tag:25}"
+    #print (bob)
+
+        except:
+            pass
